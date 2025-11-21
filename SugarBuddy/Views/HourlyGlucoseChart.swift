@@ -11,10 +11,13 @@ import Charts
 
 struct HourlyGlucoseChart: View {
     let readings: [GlucoseRecord]
-
+    
     var body: some View {
+        let minDate = readings.map { $0.startDate }.min() ?? Date()
+        
         VStack(alignment: .leading, spacing: 12) {
-            Text("Glucose")
+//            Text("Glucose")
+            Text("Avg: \(String(format: "%.0f", readings.map({ $0.value }).average ?? 0)) mg/dL")
                 .font(.headline)
 
             if readings.isEmpty {
@@ -43,13 +46,14 @@ struct HourlyGlucoseChart: View {
                         RuleMark(y: .value("Avg", avg))
                             .lineStyle(StrokeStyle(lineWidth: 1.5, dash: [6,6]))
                             .foregroundStyle(.blue.opacity(0.5))
-                            .annotation(position: .topTrailing) {
-                                Text("Avg: \(String(format: "%.0f", avg))")
-                                    .font(.caption2)
-                                    .foregroundColor(.blue)
-                            }
+//                            .annotation(position: .topTrailing) {
+//                                Text("Avg: \(String(format: "%.0f", avg))")
+//                                    .font(.caption2)
+//                                    .foregroundColor(.blue)
+//                            }
                     }
                 }
+                .chartXScale(domain: minDate ... Date.now)
                 .frame(height: 250)
                 .padding(.top, 4)
                 .chartXAxis {

@@ -1,9 +1,6 @@
 import SwiftUI
 
 struct ContentView: View {
-    @Environment(HealthKitService.self) private var healthKitService
-//    @State private var selectedRange = "30 Days"
-//    private let options = ["30 Days", "60 Days", "90 Days"]
 
     var body: some View {
         TabView {
@@ -12,9 +9,10 @@ struct ContentView: View {
 
             ChartsTab()
                 .tabItem { Label("Chart", systemImage: "chart.line.uptrend.xyaxis") }
+            
+            SettingsTabView()
+                .tabItem { Label("Settings", systemImage: "gear") }
         }
-//        .task {
-//            await healthKitService.getReadings(range: selectedRange)
-//        }
+
     }
 }

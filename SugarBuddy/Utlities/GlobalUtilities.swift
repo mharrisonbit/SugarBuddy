@@ -217,3 +217,28 @@ struct HourlyAverage {
     let hour: Int
     let average: Double
 }
+
+
+func dateFormatter(dateToFormat:Date, formatString:String) ->String {
+    // 1) Create a DateFormatter() object.
+    let format = DateFormatter()
+     
+    // 2) Set the current timezone to .current, or America/Chicago.
+    format.timeZone = .current
+     
+    // 3) Set the format of the altered date.
+    format.dateFormat = formatString
+     
+    // 4) Set the current date, altered by timezone.
+    let dateString = format.string(from: dateToFormat)
+    return dateString
+}
+
+extension String? {
+    var isNilOrWhitespace: Bool {
+        guard let self = self else {
+            return true // String is nil
+        }
+        return self.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+}

@@ -7,6 +7,7 @@ class HealthKitService {
 
     let healthStore = HKHealthStore()
     var readings: [GlucoseRecord] = []
+    var currentReading = "0.0"
     var isLoading: Bool = false
 
     func getReadings(range:String) async {
@@ -72,6 +73,9 @@ class HealthKitService {
             )
         }
         .unique(on: { $0.id })
+
+        currentReading = "Current Reading " + String(format: "%.0f", readings.first?.value ?? "0.0") + " mg/dL at " + dateFormatter(dateToFormat: readings.first?.startDate ?? Date.now, formatString: "h:mm:ss a")
+
         isLoading = false
     }
 
@@ -90,6 +94,7 @@ class HealthKitService {
                     timeFrame = -90
                     break
                 default:
+                timeFrame = -1
                     break
             }
             
